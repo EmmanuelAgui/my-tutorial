@@ -1,0 +1,21 @@
+import { RouterModule,Routes } from '@angular/router';
+import { LoginComponent } from './login/login.component';
+import { TodoComponent } from './todo/todo.component';
+
+const routes:Routes=[
+    {
+        path:'login',
+        component:LoginComponent
+    },
+    {
+        path:'todo',
+        component:TodoComponent
+    },
+    {
+        path:'',
+        redirectTo:'todo',
+        pathMatch:'full',
+    },
+];
+
+export const routing = RouterModule.forRoot(routes);
