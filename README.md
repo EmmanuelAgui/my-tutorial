@@ -2,6 +2,12 @@
 
 Angular从0到1练习代码
 
+##启动运行
+1.先安装依赖：执行npm i
+(ps:若使用本地json-server模拟API，则还需要本地全局安装json-server:执行 npm i -g json-server)
+2.启动：ng serve
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.4.
 
 ## Development server

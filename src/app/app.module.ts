@@ -3,25 +3,26 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { TodoModule } from './todo/todo.module';
+
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { TodoComponent } from './todo/todo.component';
 import { AuthService } from './core/auth.service';
-import { routing } from './app.routing';
+import { AppRoutingModule } from './app-routing.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    TodoComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    routing
+    AppRoutingModule,
+    TodoModule
   ],
   providers: [
     {provide:'auth',useClass:AuthService}

@@ -1,6 +1,7 @@
 import { RouterModule,Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { TodoComponent } from './todo/todo.component';
+import { NgModule } from '@angular/core';
 
 const routes:Routes=[
     {
@@ -9,7 +10,7 @@ const routes:Routes=[
     },
     {
         path:'todo',
-        component:TodoComponent
+        redirectTo:'todo'
     },
     {
         path:'',
@@ -18,4 +19,13 @@ const routes:Routes=[
     },
 ];
 
-export const routing = RouterModule.forRoot(routes);
+@NgModule({
+    imports:[
+        RouterModule.forRoot(routes)
+    ],
+    exports:[
+        RouterModule
+    ]
+})
+
+export class AppRoutingModule{}

@@ -1,6 +1,14 @@
-<div>
-    <input type="text" [(ngModel)]="desc" (keyup.enter)="addTodo()" >
-    <ul>
-        <li *ngFor="let todo of todos">{{todo.desc}}</li>
-    </ul>
-</div>
+<section class="todoapp">
+    <app-todo-header
+        (textChanges)="onTextChanges($event)"
+        (onEnterUp)="addTodo()"
+    ></app-todo-header>
+    <app-todo-list
+        [todos]="todos"
+        (onToggleAll)="toggleAll()"
+        (onRemoveTodo)="removeTodo($event)"
+        (onToggleTodo)="toggleTodo($event)"
+    ></app-todo-list>
+    <app-todo-footer 
+        [itemCount]="todos?.length"></app-todo-footer>
+  </section>
