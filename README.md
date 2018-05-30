@@ -1,6 +1,6 @@
 # MyTutorial
 
-Angular从0到1练习代码
+Angular从0到1练习代码:结合Angular最新文档
 
 ##启动运行
 1.先安装依赖：执行npm i
