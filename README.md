@@ -6,6 +6,7 @@ Angular从0到1练习代码:结合Angular最新文档
 1.先安装依赖：执行npm i
 (ps:若使用本地json-server模拟API，则还需要本地全局安装json-server:执行 npm i -g json-server)
 2.启动：ng serve
+(ps:若使用本地json-server模拟API,则还需要打开另外一个命令行端口，进入项目文件夹，执行：json-server ./src/app/todo/todo-data.json)
 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.4.
