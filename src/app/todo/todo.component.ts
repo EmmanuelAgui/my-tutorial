@@ -1,13 +1,13 @@
 import { Component, OnInit, Inject } from "@angular/core";
-import { Todo } from "./todo.model";
+import { Todo } from "../domain/entities";
 import { TodoService } from "./todo.service";
-import { ObserveOnMessage } from "rxjs/operators/observeOn";
 
 
 @Component({
     selector:'my-todo',
     templateUrl:'./todo.component.html',
     styleUrls:['./todo.component.scss'],
+    providers:[TodoService]
 })
 
 export class TodoComponent implements OnInit{
@@ -25,18 +25,19 @@ export class TodoComponent implements OnInit{
 
     //获取todos
     getTodos():void{
-        this.service.getTodos()
-            .subscribe(todos=>this.todos=todos);
+        this.service
+        .getTodos()
+        .then(todos=>this.todos=[...todos]);
     }
 
-    //添加todo
+
     addTodo(){
         this.service
-            .addTodo(this.desc)
-            .subscribe(todo=>{
-                this.todos=[...this.todos,todo]
-                this.desc='';
-            })
+        .addTodo(this.desc)
+        .then(todo=>{
+            this.todos=[...this.todos,todo];
+            this.desc='';
+        });
     }
 
     //删除todo
@@ -48,6 +49,16 @@ export class TodoComponent implements OnInit{
                 ...this.todos.slice(i+1)
             ];
         });
+    }
+
+    //
+    toggleTodo(todo:Todo){
+        //设置completed=true为选中状态
+        todo.completed=true;
+        //调用接口更新实体对象,
+        this.service.toggleTodo(todo).subscribe(res=>{
+            console.info(res);
+        })
     }
 
     onTextChanges(value){

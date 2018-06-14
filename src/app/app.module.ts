@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './core/auth.service';
 import { AppRoutingModule } from './app-routing.module';
+import { CoreModule } from './core/core.module';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { AppRoutingModule } from './app-routing.module';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    CoreModule,
     TodoModule
   ],
   providers: [

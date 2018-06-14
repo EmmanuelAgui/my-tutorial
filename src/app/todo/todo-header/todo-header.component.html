@@ -1,9 +1,10 @@
-<header class="header">
+<header>
   <h1>Todos</h1>
   <input 
-    class="new-todo" 
-    [placeholder]="placeholder" 
-    autofocus="" 
-    [(ngModel)]="inputValue" 
-    (keyup.enter)="enterUp()" />
+    class="new-todo"
+    [placeholder]="placeholder"
+    (keyup.enter)="onenterUp()"
+    [(ngModel)]="inputValue"
+    autofocus
+    type="text">
 </header>

@@ -4,8 +4,8 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators'
 
-import { Todo } from './todo.model';
 import { UUID } from 'angular2-uuid';
+import { Todo } from '../domain/entities';
 
 
 const httpOptions = {
@@ -24,18 +24,28 @@ export class TodoService {
   ) { }
 
   //GET /todos
-  getTodos():Observable<Todo[]>{
-    return this.http.get<Todo[]>(this.api_url)
+  getTodos():Promise<Todo[]>{
+    const userId = +localStorage.getItem('userId');
+    const url = `${this.api_url}/?userId=${userId}`;
+    return this.http.get(url)
+            .toPromise()
+            .then(res=>res as Todo[])
+            .catch(this.handleError);
   }
 
   //POST /todos
-  addTodo(desc:string):Observable<Todo>{
+  addTodo(desc:string):Promise<Todo>{
+    const userId:number = +localStorage.getItem('userId');
     let todo = {
       id:UUID.UUID(),
       desc:desc,
-      completed:false
+      completed:false,
+      userId
     };
-    return this.http.post<Todo>(this.api_url,todo,httpOptions)
+    return this.http.post(this.api_url,JSON.stringify(todo),{headers:httpOptions.headers})
+            .toPromise()
+            .then(res=> res as Todo)
+            .catch(this.handleError);
   }
 
   //DELETE /todos/:id
@@ -46,9 +56,16 @@ export class TodoService {
 
 
   //PUT 
-  // toggleTodo(todo:Todo):Observable<Todo>{
+  toggleTodo(todo:Todo):Observable<Todo>{
+    const url = this.api_url;
+    return this.http.put<Todo>(url,todo,httpOptions)
+  }
 
-  // }
+
+  private handleError(error:any):Promise<any>{
+    console.error('An error occured:',error);
+    return Promise.reject(error.message || error);
+  }
 
 
 

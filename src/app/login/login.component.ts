@@ -1,33 +1,34 @@
-import { Component,OnInit, Inject } from  '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { Auth } from '../domain/entities';
+import { Router } from '@angular/router';
 
 @Component({
-  selector:'my-login',
-  template:`
-    <div>
-      <input type="text"
-        [(ngModel)]="username"
-      />
-      <input (keyup.enter)="onClick()" type="password"
-        [(ngModel)]="password"
-       />
-      <button (click)="onClick()">Login</button>
-    </div>
-  `,
-  styles:[],
+  selector: 'my-login',
+  templateUrl:'./login.component.html',
+  styles: [],
 })
 
-export class LoginComponent implements OnInit{
-  username='';
-  password='';
-  constructor(@Inject('auth') private service){
+export class LoginComponent implements OnInit {
+  username = '';
+  password = '';
+  auth:Auth;
+  constructor(@Inject('auth') private service,private router:Router) {
 
   }
 
-  ngOnInit(){}
+  ngOnInit() { }
 
-  onClick(){
-    // console.log('username:'+username +'\n\r' +'password:'+password)
-    //调用service的方法
-    console.info('auth result is: '+this.service.loginWithCredentials(this.username,this.password));
+  onSubmit(formValue) {
+    this.service
+      .loginWithCredentials(formValue.login.username,formValue.login.password)
+      .then(auth=>{
+        let redirectUrl = (auth.redirectUrl===null)?'/':auth.redirectUrl;
+        if(!auth.hasError){
+          this.router.navigate([redirectUrl]);
+          localStorage.removeItem('redirectUrl');
+        }else{
+          this.auth = Object.assign({},auth);
+        }
+      })
   }
 }

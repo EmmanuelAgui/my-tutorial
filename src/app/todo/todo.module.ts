@@ -7,7 +7,7 @@ import { TodoRoutingModule } from "./todo-routing.module";
 import { TodoComponent } from "./todo.component";
 import { TodoHeaderComponent } from "./todo-header/todo-header.component";
 import { TodoFooterComponent } from "./todo-footer/todo-footer.component";
-import { TodoService } from "./todo.service";
+// import { TodoService } from "./todo.service";
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoItemComponent } from './todo-item/todo-item.component';
 
@@ -27,9 +27,9 @@ import { TodoItemComponent } from './todo-item/todo-item.component';
         TodoListComponent,
         TodoItemComponent
     ],
-    providers:[TodoService
-        // {provide:'todoService',useClass:TodoService}
-    ]
+    // providers:[TodoService
+    //     // {provide:'todoService',useClass:TodoService}
+    // ]
 })
 
 export class TodoModule{}

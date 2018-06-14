@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
+import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-todo-header',
@@ -10,32 +11,31 @@ import 'rxjs/add/operator/distinctUntilChanged';
   styleUrls: ['./todo-header.component.css']
 })
 export class TodoHeaderComponent implements OnInit {
-  inputValue:string = '';
-
-  @Input() placeholder:string = 'What needs to be done?';
-  @Input() delay:number = 300;
-
-  //detect the input value and output this to parent
+  inputValue='';
+  @Input() placeholder='What needs to be done?';
+  @Input() delay:number=300;
   @Output() textChanges = new EventEmitter<string>();
-  //detect the enter keyup event and output this to parent
   @Output() onEnterUp = new EventEmitter<boolean>();
+  ngOnInit(){}
 
   constructor(
     private elementRef:ElementRef
-  ) { 
-    const event$ = Observable.fromEvent(elementRef.nativeElement,'keyup')
-      .map(()=>this.inputValue)
-      .debounceTime(this.delay)
-      .distinctUntilChanged();
-    event$.subscribe(input=>this.textChanges.emit(input));
+  ){
+    const $event = Observable.fromEvent(elementRef.nativeElement,'keyup').pipe(
+      map(()=>this.inputValue),
+      debounceTime(this.delay),
+      distinctUntilChanged(),
+    )
+    $event.subscribe(input=>this.textChanges.emit(input));
   }
 
-  ngOnInit() {
-  }
+  
 
-  enterUp(){
+  onenterUp(){
     this.onEnterUp.emit(true);
-    this.inputValue = '';
+    this.inputValue='';
   }
+
+
 
 }
